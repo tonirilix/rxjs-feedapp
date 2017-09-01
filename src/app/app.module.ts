@@ -4,18 +4,21 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { LatestNewsComponent } from './latest-news/latest-news.component';
-import { NewsFeedServiceService } from './news-feed-service.service';
+import { TouchDragToLoadComponent } from './touch-drag-to-load/touch-drag-to-load.component';
+import { NewsFeedService } from './news-feed.service';
+import { LoadNotificationService } from './load-notification.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LatestNewsComponent
+    LatestNewsComponent,
+    TouchDragToLoadComponent
   ],
   imports: [
     BrowserModule,
     HttpModule
   ],
-  providers: [NewsFeedServiceService],
+  providers: [NewsFeedService, LoadNotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
