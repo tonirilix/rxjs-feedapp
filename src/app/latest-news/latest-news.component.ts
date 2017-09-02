@@ -14,7 +14,7 @@ import { LoadNotificationService } from '../load-notification.service';
 })
 export class LatestNewsComponent implements OnInit {
 
-  updateNewsTrigger$ = Observable.timer(0, 50000)
+  updateNewsTrigger$ = Observable.timer(0, 10000)
     .merge(this.loadNotificationSvc.requestLoad$);
 
   news$ = this.updateNewsTrigger$.switchMap(() => this.newsFeedSvc.getNews())
