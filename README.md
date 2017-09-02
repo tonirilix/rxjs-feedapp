@@ -1,6 +1,17 @@
 # Feedapp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.3.2.
+This project is intended to show how you can use rxjs for handle animations, requesting data and updating and drawing data into the application.
+Observables are a really powerful technology that can be use in many different ways.
+### Features developed in this demo app:
+- Get data from server and display a list
+- Add feature to get data on an interval
+- Add a drag-and-get-data feature.
+
+All the above features where created using observables.
+
+# Demo
+[https://dist-akffsijeln.now.sh/](https://dist-akffsijeln.now.sh/): You'll need to open inspector and toggle the device view in order to use the drag functionality. The demo is intended to show how rxjs can be used more than just for manage state.
+
 
 ## Development server
 
