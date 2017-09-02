@@ -8,9 +8,17 @@ Observables are a really powerful technology that can be use in many different w
 - Add a drag-and-get-data feature.
 
 All the above features where created using observables.
+It's basically a replica of what Ben Lesh did in the following video: https://www.youtube.com/watch?v=DBai5EEFioI and for learning purposes.
+I did't get to make the code work exactly as he did, I still need to figure that out.
+
 
 # Demo
 [https://dist-akffsijeln.now.sh/](https://dist-akffsijeln.now.sh/): You'll need to open inspector and toggle the device view in order to use the drag functionality. The demo is intended to show how rxjs can be used more than just for manage state.
+
+# Resources
+- [RxJS By Example (Animations with RxJS & Angular) ft. Ben Lesh](https://www.youtube.com/watch?v=DBai5EEFioI)
+- [Ben Lesh - Advanced RxJS: State Management and Animations](https://www.youtube.com/watch?v=X_RnO7KSR-4)
+- [Ng-Cruise - RxJS By Example with Ben Lesh](https://www.youtube.com/watch?time_continue=648&v=K7AvXUNB2X8)
 
 
 ## Development server
