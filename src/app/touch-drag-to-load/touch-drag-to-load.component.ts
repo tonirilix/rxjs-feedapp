@@ -49,11 +49,11 @@ export class TouchDragToLoadComponent implements OnInit {
         .do(p => pos = p) // Here we update de last value emited to use it after the touchend
         .takeUntil(this.touchend$)
         .concat(
-        // Here we create a stream of numbers in desc mode to animate the object all the way up.
-        // We need a small delay (defer) to wait for pos to be updated
-        Observable.defer(() =>
-          this.tweenObservable(pos, 0, 200)
-        )
+          // Here we create a stream of numbers in desc mode to animate the object all the way up.
+          // We need a small delay (defer) to wait for pos to be updated
+          Observable.defer(() =>
+            this.tweenObservable(pos, 0, 200)
+          )
         )
     })
     .do((p) => {
@@ -75,7 +75,13 @@ export class TouchDragToLoadComponent implements OnInit {
   positionTranslate3d$ = this.position$
     .map(p => `translate3d(0, ${p - 70}px, 0)`)
 
-  rotate$ = this.tweenObservable(0, 360, 500).repeat();
+  rotate$ = this.loadNotificationSvc.requestLoad$
+    .switchMap(() =>  
+      this.tweenObservable(0, 360, 500)
+        .repeat()
+        .takeUntil(this.loadNotificationSvc.loadComplete$)
+        .concat(Observable.of(0))
+    );  
   rotateTransform$ = this.rotate$.map((r) => {
     // console.log('xD', r)
     return `rotate(${r}deg)`
