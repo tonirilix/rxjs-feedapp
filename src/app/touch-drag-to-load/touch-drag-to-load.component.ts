@@ -35,36 +35,36 @@ export class TouchDragToLoadComponent implements OnInit {
    */
   completeAnimation$ = this.loadNotificationSvc.loadComplete$
     .map(() => this.currentPos)
-    .switchMap(currentPos => this.tweenObservable(currentPos, 0 , 200))
+    .switchMap(currentPos => this.tweenObservable(currentPos, 0, 200))
 
   touchstart$ = Observable.fromEvent<TouchEvent>(document, 'touchstart');
   touchend$ = Observable.fromEvent<TouchEvent>(document, 'touchend');
   touchmove$ = Observable.fromEvent<TouchEvent>(document, 'touchmove');
 
   drag$ = this.touchstart$
-    .switchMap((start)=> {
+    .switchMap((start) => {
       let pos = 0;
       return this.touchmove$
-      .map(move => move.touches[0].pageY - start.touches[0].pageY )
-      .do(p => pos = p ) // Here we update de last value emited to use it after the touchend
-      .takeUntil(this.touchend$)
-      .concat( 
+        .map(move => move.touches[0].pageY - start.touches[0].pageY)
+        .do(p => pos = p) // Here we update de last value emited to use it after the touchend
+        .takeUntil(this.touchend$)
+        .concat(
         // Here we create a stream of numbers in desc mode to animate the object all the way up.
         // We need a small delay (defer) to wait for pos to be updated
-        Observable.defer(()=> 
+        Observable.defer(() =>
           this.tweenObservable(pos, 0, 200)
         )
-      )
+        )
     })
-    .do((p)=>{
+    .do((p) => {
       // Here we'll be checking if we're in the middle of the screen 
       // so we can make a request some data
-      if(p >= window.innerHeight / 2){
+      if (p >= window.innerHeight / 2) {
         console.log('inner', window.innerHeight);
-        this.loadNotificationSvc.requestLoad$.next();        
+        this.loadNotificationSvc.requestLoad$.next();
       }
     })
-    .takeWhile((p)=> p < window.innerHeight / 2 ) // We're done with the observable when we reach the middle of the screen
+    .takeWhile((p) => p < window.innerHeight / 2) // We're done with the observable when we reach the middle of the screen
     .repeat(); // After we kill the observable we need to repeat the process to keep listening after
 
   position$ = this.drag$
@@ -73,8 +73,13 @@ export class TouchDragToLoadComponent implements OnInit {
     .do(pos => this.currentPos = pos)
 
   positionTranslate3d$ = this.position$
-    .map(p=> `translate3d(0, ${p - 70}px, 0)`)    
-  rotateTransform$ = Observable.of(`rotate(0deg)`);
+    .map(p => `translate3d(0, ${p - 70}px, 0)`)
+
+  rotate$ = this.tweenObservable(0, 360, 500).repeat();
+  rotateTransform$ = this.rotate$.map((r) => {
+    // console.log('xD', r)
+    return `rotate(${r}deg)`
+  });
 
   constructor(private loadNotificationSvc: LoadNotificationService) { }
 
@@ -83,8 +88,8 @@ export class TouchDragToLoadComponent implements OnInit {
     const step = (start - end) / emissions
     let c = 0;
     return Observable.timer(0, 10)
-    .map(x => start - step * (x + 1))        
-    .take(emissions)
+      .map(x => start - step * (x + 1))
+      .take(emissions)
   }
 
   ngOnInit() {
